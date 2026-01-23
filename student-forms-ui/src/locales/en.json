@@ -1,0 +1,46 @@
+{
+    "title": "Participant Registration / பங்கேற்பாளர் பதிவு",
+    "fields": {
+        "studentName": "Participant Name (with Initial) / பங்கேற்பாளர் பெயர் (முன்னெழுத்துடன்)",
+        "gender": "Gender / பாலினம்",
+        "class": "Class / வகுப்பு",
+        "section": "Section / பிரிவு",
+        "schoolName": "School Name & Location / பள்ளி பெயர் மற்றும் இடம்",
+        "emisNumber": "EMIS Number / EMIS எண்",
+        "department": "Department / துறை",
+        "mobileNumber": "Mobile / கைபேசி  (WhatsApp Preferred)",
+        "collegeName": "College Name & Location / கல்லூரி பெயர் மற்றும் இடம்",
+        "yearOfStudy": "Year of Study / படிக்கும் ஆண்டு",
+        "registerNumber": "Register Number / பதிவெண்",
+        "email": "Email / மின்னஞ்சல்",
+        "submit": "Submit / சமர்ப்பிக்கவும்",
+        "update": "Update / புதுப்பிக்கவும்",
+        "cancel": "Cancel / ரத்துசெய்"
+    },
+    "placeholders": {
+        "studentName": "e.g. John D / எ.கா. ஜான் ட",
+        "selectGender": "Select Gender / பாலினத்தை தேர்வு செய்யவும்",
+        "selectClass": "Select Class / வகுப்பை தேர்வு செய்யவும்",
+        "selectSection": "Select Section / பிரிவை தேர்வு செய்யவும்",
+        "schoolName": "e.g. Govt High School, Chennai / எ.கா. அரசு உயர்நிலைப் பள்ளி, சென்னை",
+        "selectSchool": "Select School / பள்ளியைத் தேர்வு செய்யவும்",
+        "emisNumber": "Enter EMIS Number / EMIS எண்ணை உள்ளிடவும் (விரும்பினால்)",
+        "enterDepartment": "Enter Department / துறையை உள்ளிடவும்",
+        "enterCollege": "Enter College Name / கல்லூரி பெயரை உள்ளிடவும்"
+    },
+    "validation": {
+        "required": "This field is required / இந்த புலம் அவசியம்",
+        "number": "Must be a number / எண்ணாக இருக்க வேண்டும்",
+        "digits10": "Must be exactly 10 digits / சரியாக 10 எண்கள் இருக்க வேண்டும்",
+        "email": "Invalid email address / தவறான மின்னஞ்சல் முகவரி"
+    },
+    "list": {
+        "title": "Registered Participants / பதிவு செய்யப்பட்ட பங்கேற்பாளர்கள்",
+        "actions": "Actions / செயல்கள்",
+        "edit": "Edit / திருத்து",
+        "delete": "Delete / அழி",
+        "noStudents": "No participants found. / பங்கேற்பாளர்கள் இல்லை."
+    },
+    "success": "Participant saved successfully! / பங்கேற்பாளர் விவரங்கள் சேமிக்கப்பட்டன!",
+    "deleted": "Participant deleted successfully! / பங்கேற்பாளர் விவரங்கள் அழிக்கப்பட்டன!"
+}

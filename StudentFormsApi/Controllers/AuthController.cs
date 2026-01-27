@@ -11,10 +11,12 @@ namespace StudentFormsApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly Data.AppDbContext _context;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, Data.AppDbContext context)
         {
             _configuration = configuration;
+            _context = context;
         }
 
         public class LoginModel
@@ -26,8 +28,9 @@ namespace StudentFormsApi.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel login)
         {
-            var adminSettings = _configuration.GetSection("AdminSettings");
-            if (login.Username == adminSettings["Username"] && login.Password == adminSettings["Password"])
+            var user = _context.Users.FirstOrDefault(u => u.Username == login.Username && u.Password == login.Password);
+
+            if (user != null)
             {
                 var jwtSettings = _configuration.GetSection("Jwt");
                 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
@@ -36,10 +39,10 @@ namespace StudentFormsApi.Controllers
                 {
                     Subject = new ClaimsIdentity(new[]
                     {
-                        new Claim(ClaimTypes.Name, login.Username),
-                        new Claim(ClaimTypes.Role, "Admin")
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim(ClaimTypes.Role, user.Role)
                     }),
-                    Expires = DateTime.UtcNow.AddHours(1),
+                    Expires = DateTime.UtcNow.AddHours(24),
                     Issuer = jwtSettings["Issuer"],
                     Audience = jwtSettings["Audience"],
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -49,7 +52,7 @@ namespace StudentFormsApi.Controllers
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var jwtToken = tokenHandler.WriteToken(token);
 
-                return Ok(new { token = jwtToken });
+                return Ok(new { token = jwtToken, role = user.Role });
             }
 
             return Unauthorized();

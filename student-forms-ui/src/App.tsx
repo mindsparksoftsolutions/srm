@@ -7,6 +7,7 @@ import CollegeRegisterPage from './pages/CollegeRegisterPage';
 import CollegeStudentsPage from './pages/CollegeStudentsPage';
 import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
+import AdminSetupPage from './pages/AdminSetupPage';
 
 const App: React.FC = () => {
   return (
@@ -17,10 +18,16 @@ const App: React.FC = () => {
           <Route path="/college-register" element={<CollegeRegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
 
-          <Route element={<PrivateRoute />}>
+          {/* Admin & SuperAdmin Routes */}
+          <Route element={<PrivateRoute allowedRoles={['Admin', 'SuperAdmin']} />}>
             <Route path="/students" element={<StudentsPage />} />
             <Route path="/college-students" element={<CollegeStudentsPage />} />
             <Route path="/college-register-list" element={<CollegeStudentsPage />} />
+          </Route>
+
+          {/* SuperAdmin Only Routes */}
+          <Route element={<PrivateRoute allowedRoles={['SuperAdmin']} />}>
+            <Route path="/admin/events" element={<AdminSetupPage />} />
           </Route>
         </Routes>
       </Layout>

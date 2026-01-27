@@ -18,5 +18,7 @@ namespace StudentFormsApi.Models
         [Required]
         [MaxLength(250)]
         public string Venue { get; set; } = string.Empty;
+
+        public bool IsActive { get; set; } = false;
     }
 }

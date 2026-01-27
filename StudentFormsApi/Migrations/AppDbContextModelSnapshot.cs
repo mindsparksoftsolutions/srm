@@ -23,6 +23,99 @@ namespace StudentFormsApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("StudentFormsApi.Models.College", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Colleges", "srm");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000000"),
+                            Name = "Bharathidasan Engineering College, Natrampalli"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000001"),
+                            Name = "G.P. Polytechnic College, Tirupattur"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000002"),
+                            Name = "GP Pharmacy College, Chinnamottur"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000003"),
+                            Name = "Government Arts And Science College, Patchur"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000004"),
+                            Name = "Government Arts And Science College, Tirupattur"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000005"),
+                            Name = "Holy Cross Arts and Science College for Women, Tirupattur"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000006"),
+                            Name = "Imayam Arts and Science College, Vaniyambadi"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000007"),
+                            Name = "Islamiah College (Autonomous)"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000008"),
+                            Name = "Islamiah Women's Arts and Science College, Vaniyambadi"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000009"),
+                            Name = "Marudhar Kesari Jain College for Women, Vaniyambadi"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000010"),
+                            Name = "Podhigai College of Engineering & Technology - PCET, Adiyur"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000011"),
+                            Name = "Priyadarshini Engineering College, Vaniyambadi"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000012"),
+                            Name = "Vaani Polytechnic College, Vaniyambadi"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000013"),
+                            Name = "Yelagiri Arts and Science College, Tirupattur"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-000000000014"),
+                            Name = "Others"
+                        });
+                });
+
             modelBuilder.Entity("StudentFormsApi.Models.CollegeStudent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -76,6 +169,186 @@ namespace StudentFormsApi.Migrations
                     b.ToTable("CollegeStudents", "srm");
                 });
 
+            modelBuilder.Entity("StudentFormsApi.Models.EventDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Venue")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventDetails", "srm");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Date = "22nd Jan 2026 at 9.30 am",
+                            EventType = "Student",
+                            IsActive = true,
+                            Venue = "Brindhavan Matriculation Higher Secondary School, Natrampalli"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Date = "23rd Jan 2026 at 9.30 am",
+                            EventType = "College",
+                            IsActive = true,
+                            Venue = "Marudhar Kesari Jain College for Women, Vaniyambadi"
+                        });
+                });
+
+            modelBuilder.Entity("StudentFormsApi.Models.School", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Schools", "srm");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000000"),
+                            Name = "GGHS PATCHUR"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000001"),
+                            Name = "GHS K BANDARAPALLI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000002"),
+                            Name = "GHS NAYANACHERUVU"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000003"),
+                            Name = "GHS No. 1. KOTHUR"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000004"),
+                            Name = "GHS THAGARAKUPPAM"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000005"),
+                            Name = "GHSS AMBALUR"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000006"),
+                            Name = "GHSS PATCHUR"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000007"),
+                            Name = "GOVT HSS JANGALAPURAM"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000008"),
+                            Name = "GOVT. BOYS. HSS NATRAMPALLI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000009"),
+                            Name = "GOVT. GIRLS HSS NATRAMPALLI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000010"),
+                            Name = "GOVT. HSS. DHASIRIYAPPANUR"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000011"),
+                            Name = "PUMS ADIPERAMANUR"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000012"),
+                            Name = "PUMS ARASANAPALLI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000013"),
+                            Name = "PUMS ELARAPATTI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000014"),
+                            Name = "PUMS GURUBHAVANIGUNDA"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000015"),
+                            Name = "PUMS KATHARI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000016"),
+                            Name = "PUMS KONDAKINDANAPALLI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000017"),
+                            Name = "PUMS MAMUDIMANAPALLI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000018"),
+                            Name = "PUMS VELLANAYAKANERI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000019"),
+                            Name = "BRINDAVAN MATRIC HSS, NATRAMPALLI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000020"),
+                            Name = "RAJI GARDEN MATRIC HIGHER SECONDARY SCHOOL, NATRAMPALLI"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000021"),
+                            Name = "SRI RAMAKRISHNA VIDYALAYA MATRIC SCHOOL"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-000000000022"),
+                            Name = "SSV MATRICULATION HIGHER SECONDARY SCHOOL, NATRAMPALLI"
+                        });
+                });
+
             modelBuilder.Entity("StudentFormsApi.Models.Student", b =>
                 {
                     b.Property<Guid>("Id")
@@ -116,6 +389,31 @@ namespace StudentFormsApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students", "srm");
+                });
+
+            modelBuilder.Entity("StudentFormsApi.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users", "srm");
                 });
 #pragma warning restore 612, 618
         }

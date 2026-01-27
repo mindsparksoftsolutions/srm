@@ -6,13 +6,37 @@ const Header: React.FC = () => {
     const location = useLocation();
     const isCollege = location.pathname.includes('college');
 
-    const eventDetails = isCollege ? {
-        date: "23rd Jan 2026 at 9.30 am",
-        venue: "Marudhar Kesari Jain College for Women, Vaniyambadi"
-    } : {
-        date: "22nd Jan 2026 at 9.30 am",
-        venue: "Brindhavan Matriculation Higher Secondary School, Natrampalli"
-    };
+    // Default values (fallback)
+    const [eventDetails, setEventDetails] = React.useState({
+        date: "Loading...",
+        venue: "Loading..."
+    });
+
+    React.useEffect(() => {
+        const fetchEventDetails = async () => {
+            try {
+                // Determine which type to fetch based on URL
+                const type = isCollege ? 'College' : 'Student';
+                const API_URL = window.location.hostname === 'localhost'
+                    ? `http://localhost:5078/api/Events/active/${type}`
+                    : `https://srm-reapi.vedhamsmidway.com/api/Events/active/${type}`;
+
+                const response = await fetch(API_URL);
+                if (response.ok) {
+                    const data = await response.json();
+                    setEventDetails({
+                        date: data.date,
+                        venue: data.venue
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to fetch event details:", error);
+                // Fallback or keep loading state
+            }
+        };
+
+        fetchEventDetails();
+    }, [isCollege]);
 
     return (
         <>

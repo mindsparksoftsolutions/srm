@@ -17,8 +17,9 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         try {
             const response = await axios.post(API_URL, { username, password });
-            const { token } = response.data;
+            const { token, role } = response.data;
             localStorage.setItem('token', token);
+            localStorage.setItem('role', role);
             navigate('/students');
         } catch (err) {
             setError('Invalid username or password');

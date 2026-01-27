@@ -1,9 +1,22 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const PrivateRoute: React.FC = () => {
+interface PrivateRouteProps {
+    allowedRoles?: string[];
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles }) => {
     const token = localStorage.getItem('token');
-    return token ? <Outlet /> : <Navigate to="/login" replace />;
+    const role = localStorage.getItem('role');
+
+    if (!token) return <Navigate to="/login" replace />;
+
+    if (allowedRoles && role && !allowedRoles.includes(role)) {
+        // Redirect to a safe page if authorized but wrong role
+        return <Navigate to="/students" replace />;
+    }
+
+    return <Outlet />;
 };
 
 export default PrivateRoute;

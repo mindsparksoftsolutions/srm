@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 // Determine API URL based on environment
-const BASE_URL = window.location.hostname === 'localhost'
-    ? 'http://localhost:5078/api'
-    : 'https://srm-reapi.vedhamsmidway.com/api';
+const BASE_URL = 'https://srm-reapi.vedhamsmidway.com/api';
 
 const api = axios.create({
     baseURL: BASE_URL,

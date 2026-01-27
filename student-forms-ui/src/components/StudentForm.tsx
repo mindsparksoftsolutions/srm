@@ -6,7 +6,6 @@ import type { Student } from '../services/studentService';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { User, Users, Layers, Hash, Save, X, School } from 'lucide-react';
-import { schools } from '../data/schools';
 
 interface StudentFormProps {
     studentToEdit?: Student | null;
@@ -18,6 +17,23 @@ const StudentForm: React.FC<StudentFormProps> = ({ studentToEdit, onSuccess, onC
     const { t } = useTranslation();
     const { register, handleSubmit, reset, setValue, formState } = useForm<Student>();
     const { errors } = formState;
+
+    const [schoolList, setSchoolList] = React.useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchSchools = async () => {
+            try {
+                // Import dynamically to avoid circular dependencies if any, or just use the imported service
+                const { getSchools } = await import('../services/schoolService');
+                const data = await getSchools();
+                setSchoolList(data.map(s => s.name));
+            } catch (error) {
+                console.error("Failed to fetch schools", error);
+                // Fallback to static if needed, or empty
+            }
+        };
+        fetchSchools();
+    }, []);
 
     useEffect(() => {
         if (studentToEdit) {
@@ -203,7 +219,7 @@ const StudentForm: React.FC<StudentFormProps> = ({ studentToEdit, onSuccess, onC
                             className={`${inputClasses} appearance-none cursor-pointer`}
                         >
                             <option value="">{t('placeholders.selectSchool') || 'Select School'}</option>
-                            {schools.map((school, index) => (
+                            {schoolList.map((school, index) => (
                                 <option key={index} value={school}>{school}</option>
                             ))}
                         </select>

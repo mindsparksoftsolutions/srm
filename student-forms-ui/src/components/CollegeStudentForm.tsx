@@ -6,7 +6,6 @@ import type { CollegeStudent } from '../services/collegeStudentService';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { User, Users, Layers, Hash, Save, X, School, Phone, Mail } from 'lucide-react';
-import { colleges } from '../data/colleges';
 import { departments } from '../data/departments';
 import SearchableSelect from './SearchableSelect';
 
@@ -23,6 +22,24 @@ const CollegeStudentForm: React.FC<CollegeStudentFormProps> = ({ studentToEdit, 
 
     const selectedDepartment = watch('department');
     const selectedCollege = watch('collegeNameLocation');
+
+    const [collegeList, setCollegeList] = React.useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchColleges = async () => {
+            try {
+                const { getColleges } = await import('../services/collegeListService');
+                const data = await getColleges();
+                const names = data.map(c => c.name);
+                // Ensure 'Others' is at the end if it exists, or add it?
+                // The seed data has 'Others'.
+                setCollegeList(names);
+            } catch (error) {
+                console.error("Failed to fetch colleges", error);
+            }
+        };
+        fetchColleges();
+    }, []);
 
     useEffect(() => {
         if (studentToEdit) {
@@ -42,16 +59,50 @@ const CollegeStudentForm: React.FC<CollegeStudentFormProps> = ({ studentToEdit, 
             }
 
             // Handle College
-            if (colleges.includes(studentToEdit.collegeNameLocation)) {
-                setValue('collegeNameLocation', studentToEdit.collegeNameLocation);
-            } else {
-                setValue('collegeNameLocation', 'Others');
-                setValue('customCollege', studentToEdit.collegeNameLocation);
-            }
+            // Need to wait for collegeList? Or just check if it's in the list?
+            // Since collegeList loads async, we might need to handle this carefully.
+            // For now, let's assume if it's not "Others" and we have data, it matches.
+            // But checking against 'colleges' (static) was synchronous.
+            // We'll update this logic to check against the loaded list or just set it.
+            // However, the SearchableSelect options need to be populated.
+
+            // Allow setting value even if list is loading, SearchableSelect handles value.
+            // But distinction between "In List" vs "Others" requires knowing the list.
+            // Hack for now: We won't strictly validate against the list here for "Others" check 
+            // until list is loaded, or we just trust the value.
+            // Better: Check if value is "Others". 
+            // If studentToEdit.collegeNameLocation is NOT in the fetched list (once fetched), then it's custom??
+            // Re-evaluating: 'Others' is a specific value in the list.
+
+            setValue('collegeNameLocation', studentToEdit.collegeNameLocation);
+
+            // Logic for Custom College detection needs refinement with dynamic list.
+            // For now, let's defer setting specific "Others" logic until we have the list, 
+            // OR we rely on the saved data implies it.
+            // Actually, if we saved it as a Custom College, we probably saved the custom name in the DB column.
+            // If that name is NOT in our dropdown list, how do we show it?
+            // The current logic:
+            // if (colleges.includes(val)) set val else set 'Others' & custom = val
+
+            // We can't do this synchronously easily.
+            // Let's modify this effect to run when collegeList changes OR studentToEdit changes.
         } else {
             reset();
         }
     }, [studentToEdit, setValue, reset]);
+
+    // logic to handle "Others" detection properly with async list
+    useEffect(() => {
+        if (studentToEdit && collegeList.length > 0) {
+            const val = studentToEdit.collegeNameLocation;
+            if (collegeList.includes(val)) {
+                setValue('collegeNameLocation', val);
+            } else {
+                setValue('collegeNameLocation', 'Others');
+                setValue('customCollege', val);
+            }
+        }
+    }, [collegeList, studentToEdit, setValue]);
 
     const onSubmit = async (data: CollegeStudent & { customDepartment?: string; customCollege?: string }) => {
         try {
@@ -244,7 +295,7 @@ const CollegeStudentForm: React.FC<CollegeStudentFormProps> = ({ studentToEdit, 
                             control={control}
                             render={({ field }) => (
                                 <SearchableSelect
-                                    options={colleges}
+                                    options={collegeList}
                                     value={field.value}
                                     onChange={field.onChange}
                                     label={String(t('fields.collegeName'))}

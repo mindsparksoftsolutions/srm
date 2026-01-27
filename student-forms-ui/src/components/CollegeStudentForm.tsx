@@ -355,9 +355,18 @@ const CollegeStudentForm: React.FC<CollegeStudentFormProps> = ({ studentToEdit, 
                         </div>
                     </motion.div>
 
+                    {/* Honeypot Field (Hidden) */}
+                    <input
+                        type="text"
+                        {...register('website')}
+                        style={{ display: 'none' }}
+                        tabIndex={-1}
+                        autoComplete="off"
+                    />
+
                     <motion.div
                         variants={itemVariants}
-                        className="flex gap-3"
+                        className="flex gap-3 md:col-span-2"
                     >
                         <button
                             type="submit"

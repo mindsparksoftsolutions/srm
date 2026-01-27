@@ -31,6 +31,9 @@ namespace StudentFormsApi.Models
 
         public long? EMISNumber { get; set; }
 
+        [NotMapped]
+        public string? Website { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

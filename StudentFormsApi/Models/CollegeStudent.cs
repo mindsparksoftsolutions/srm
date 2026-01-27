@@ -40,6 +40,9 @@ namespace StudentFormsApi.Models
         [MaxLength(15)]
         public string? RegisterNumber { get; set; } = string.Empty;
 
+        [NotMapped]
+        public string? Website { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

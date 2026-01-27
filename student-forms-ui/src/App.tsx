@@ -5,6 +5,8 @@ import RegisterPage from './pages/RegisterPage';
 import StudentsPage from './pages/StudentsPage';
 import CollegeRegisterPage from './pages/CollegeRegisterPage';
 import CollegeStudentsPage from './pages/CollegeStudentsPage';
+import LoginPage from './pages/LoginPage';
+import PrivateRoute from './components/PrivateRoute';
 
 const App: React.FC = () => {
   return (
@@ -12,10 +14,14 @@ const App: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<RegisterPage />} />
-          <Route path="/students" element={<StudentsPage />} />
           <Route path="/college-register" element={<CollegeRegisterPage />} />
-          <Route path="/college-students" element={<CollegeStudentsPage />} />
-          <Route path="/college-register-list" element={<CollegeStudentsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+
+          <Route element={<PrivateRoute />}>
+            <Route path="/students" element={<StudentsPage />} />
+            <Route path="/college-students" element={<CollegeStudentsPage />} />
+            <Route path="/college-register-list" element={<CollegeStudentsPage />} />
+          </Route>
         </Routes>
       </Layout>
     </Router>

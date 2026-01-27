@@ -7,6 +7,7 @@ namespace StudentFormsApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Microsoft.AspNetCore.Authorization.Authorize]
     public class CollegeStudentsController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -36,77 +37,86 @@ namespace StudentFormsApi.Controllers
             return Ok(counts);
         }
 
-        // GET: api/CollegeStudents/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CollegeStudent>> GetCollegeStudent(Guid id)
-        {
-            var student = await _context.CollegeStudents.FindAsync(id);
+         // GET: api/CollegeStudents/5
+       // [HttpGet("{id}")]
+        // public async Task<ActionResult<CollegeStudent>> GetCollegeStudent(Guid id)
+        // {
+        //     var student = await _context.CollegeStudents.FindAsync(id);
 
-            if (student == null)
-            {
-                return NotFound();
-            }
+        //     if (student == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            return student;
-        }
+        //     return student;
+        // }
 
         // POST: api/CollegeStudents
         [HttpPost]
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
         public async Task<ActionResult<CollegeStudent>> PostCollegeStudent(CollegeStudent student)
         {
+            // Honeypot Check: If "Website" is filled, it's likely a bot.
+            // Return Ok() (silent rejection) so the bot thinks it succeeded.
+            if (!string.IsNullOrEmpty(student.Website))
+            {
+                return Ok(student);
+            }
+
             student.Id = Guid.NewGuid();
             student.CreatedAt = DateTime.UtcNow;
             _context.CollegeStudents.Add(student);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCollegeStudent", new { id = student.Id }, student);
+            // return CreatedAtAction("GetCollegeStudent", new { id = student.Id }, student);
+            return Ok(student);
         }
 
-        // PUT: api/CollegeStudents/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCollegeStudent(Guid id, CollegeStudent student)
-        {
-            if (id != student.Id)
-            {
-                return BadRequest();
-            }
+        // PUT:        // PUT: api/CollegeStudents/5
+        //[HttpPut("{id}")]
+        // public async Task<IActionResult> PutCollegeStudent(Guid id, CollegeStudent student)
+        // {
+        //     if (id != student.Id)
+        //     {
+        //         return BadRequest();
+        //     }
 
-            _context.Entry(student).State = EntityState.Modified;
+        //     _context.Entry(student).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CollegeStudentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //     try
+        //     {
+        //         await _context.SaveChangesAsync();
+        //     }
+        //     catch (DbUpdateConcurrencyException)
+        //     {
+        //         if (!CollegeStudentExists(id))
+        //         {
+        //             return NotFound();
+        //         }
+        //         else
+        //         {
+        //             throw;
+        //         }
+        //     }
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
-        // DELETE: api/CollegeStudents/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCollegeStudent(Guid id)
-        {
-            var student = await _context.CollegeStudents.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
+         // DELETE: api/CollegeStudents/5
+       // [HttpDelete("{id}")]
+        // public async Task<IActionResult> DeleteCollegeStudent(Guid id)
+        // {
+        //     var student = await _context.CollegeStudents.FindAsync(id);
+        //     if (student == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            _context.CollegeStudents.Remove(student);
-            await _context.SaveChangesAsync();
+        //     _context.CollegeStudents.Remove(student);
+        //     await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
         private bool CollegeStudentExists(Guid id)
         {

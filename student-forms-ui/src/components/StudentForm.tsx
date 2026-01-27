@@ -241,6 +241,15 @@ const StudentForm: React.FC<StudentFormProps> = ({ studentToEdit, onSuccess, onC
                     {errors.emisNumber && <span className="text-red-500 text-xs mt-0.5 ml-1 flex items-center gap-1">⚠️ {errors.emisNumber.message}</span>}
                 </motion.div>
 
+                {/* Honeypot Field (Hidden) */}
+                <input
+                    type="text"
+                    {...register('website')}
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                />
+
                 {/* Buttons */}
                 <motion.div
                     variants={itemVariants}
